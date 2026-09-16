@@ -64,3 +64,13 @@ The design was iterated against an independent, strict software tester:
 | 2 | **10.0 / 10** | All gaps closed; 28/28 checks pass |
 
 Re-run the tester any time with `python tester.py`.
+
+
+# Disclamer!
+
+This was fully made using Claude Opus. A single prompt as below.
+
+Please can you create me a desktop app/ tool that allows me to create Guitar Tabs. 
+ The program will default to show me a blank tab like in the image below (but with ASCII characters). I need to be able to tab/ arrow key/ mouse select through the tab time and be able to input numbers to indicate which string. Other requirements include: Change Tuning of Guitar with Dropdown Save multiple songs tabs with in the app Functionality to export a tab or easily copy pastable. Allow inputs for Bends/ Releases/ Slides/ Vibrato/ Hammer ons and Pull Offs. 
+ For each of your itterations please create a software tester. The software tester will rate the system out 10. Please reitterate the design of the system until the software tester rates the program at 7.5 or above. Only iterate at a maximum of 5 times.
+
