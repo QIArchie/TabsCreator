@@ -1,0 +1,52 @@
+HOW TO GIVE THE APP ITS OWN ICON (window + taskbar)
+====================================================
+
+Open guitar_tab_app.py and make these two small edits.
+
+------------------------------------------------------------------
+EDIT 1 — add these imports near the top (with the other imports)
+------------------------------------------------------------------
+import os, sys, ctypes
+
+------------------------------------------------------------------
+EDIT 2 — inside class TabApp, in __init__, right AFTER these lines:
+
+        super().__init__()
+        self.title("ASCII Guitar Tab Editor")
+
+    ...paste this block:
+------------------------------------------------------------------
+        self._set_app_icon()
+
+------------------------------------------------------------------
+EDIT 3 — add this new method anywhere inside the TabApp class
+         (e.g. just below __init__):
+------------------------------------------------------------------
+    def _set_app_icon(self):
+        """Give the window + Windows taskbar our own icon."""
+        # Works whether run as a .py/.pyw script OR a PyInstaller .exe
+        base = getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__)))
+        ico = os.path.join(base, "guitar_tab.ico")
+        # Windows: make the taskbar use OUR icon instead of grouping under python
+        try:
+            ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(
+                "ArchieTilling.GuitarTabEditor")
+        except Exception:
+            pass
+        try:
+            if os.path.exists(ico):
+                self.iconbitmap(ico)            # title bar + taskbar (Windows)
+        except Exception:
+            pass
+        # Cross-platform fallback (also nice on the Alt-Tab switcher)
+        try:
+            png = os.path.join(base, "guitar_tab.png")
+            if os.path.exists(png):
+                self._icon_img = tk.PhotoImage(file=png)
+                self.iconphoto(True, self._icon_img)
+        except Exception:
+            pass
+
+------------------------------------------------------------------
+Keep guitar_tab.ico (and guitar_tab.png) in the SAME folder as the script.
+That's it — the window and taskbar now show the guitar icon.
